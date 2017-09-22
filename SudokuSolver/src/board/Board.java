@@ -38,7 +38,8 @@ public class Board {
      */
     public void setNum(int row, int col, int val) {
         if (row < 1 || row > 9 || col < 1 || col > 9 || val < 1 || val > 9) {
-            throw new IllegalArgumentException("Invalid number in the parameters of setnum");
+            throw new IllegalArgumentException(
+                    "Invalid number in the parameters of setnum");
         } else if (board[row - 1][col - 1].setVal(val)) {
             setBlockFalse(row, col, val);
             setRowFalse(row, val);
@@ -96,6 +97,46 @@ public class Board {
         for (int i = 0; i < 9; i++) {
             board[i][col - 1].setFalse(val);
         }
+    }
+
+    /**
+     * Creates a representation of a grid like you see in the regular seppuku
+     * puzzles
+     * 
+     * @return the grid of the puzzle
+     */
+    public String getGrid() {
+        String s = "";
+        for (int i = 0; i < 9; i++) {
+            // if (i % 3 == 0) {
+            // for (int k = 0; k < 30; k++) {
+            // s = s + "-";
+            // }
+            // s = s + "\n";
+            // }
+            for (int j = 0; j < 9; j++) {
+                // if (j % 3 == 0) {
+                // s = s + "|";
+                // }
+                s = s + "[";
+                if (board[i][j].getVal() == 0) {
+                    s = s + " ";
+                } else {
+                    s = s + board[i][j].getVal();
+                }
+                s = s + "]";
+            }
+            s = s + "\n";
+        }
+        return s;
+    }
+
+    public String getAvailabilites() {
+        String s = "";
+        for (int i = 0; i < 9; i++) {
+            //put some shit in here that can get all of the availabilities
+        }
+        return s;
     }
 
 }
