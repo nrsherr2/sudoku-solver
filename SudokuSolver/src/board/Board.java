@@ -9,6 +9,7 @@ package board;
 public class Board {
 
     Square[][] board;
+    int numSpacesFilled;
 
     /**
      * Creates a new board and initializes all of the squares
@@ -20,6 +21,22 @@ public class Board {
                 board[i][j] = new Square();
             }
         }
+        numSpacesFilled = 0;
+    }
+
+    /**
+     * Checks a specific spot in the grid to see if a value can be placed there
+     * 
+     * @param row
+     *            the row
+     * @param col
+     *            the column
+     * @param val
+     *            the value to check
+     * @return if that block has that number in its list of availabilities
+     */
+    public boolean checkAvailable(int row, int col, int val) {
+        return board[row][col].canUse(val);
     }
 
     /**
@@ -44,7 +61,21 @@ public class Board {
             setBlockFalse(row, col, val);
             setRowFalse(row, val);
             setColFalse(col, val);
+            numSpacesFilled++;
         }
+    }
+
+    /**
+     * Tells the user how close they are to the end
+     * 
+     * @return the number of spaces filled
+     */
+    public int getNumSpacesFilled() {
+        return numSpacesFilled;
+    }
+
+    public void setNumSpacesFilled(int numSpacesFilled) {
+        this.numSpacesFilled = numSpacesFilled;
     }
 
     /**
@@ -131,10 +162,44 @@ public class Board {
         return s;
     }
 
+    /**
+     * Tells the user exactly what can be placed in each spot
+     * 
+     * @return a string containing what can be placed in each spot
+     */
     public String getAvailabilites() {
         String s = "";
         for (int i = 0; i < 9; i++) {
-            //put some shit in here that can get all of the availabilities
+            for (int r = 0; r < 3; r++) {
+                for (int j = 0; j < 9; j++) {
+                    s = s + "[";
+                    for (int checkNum = r * 3; checkNum < (r * 3)
+                            + 3; checkNum++) {
+                        if (board[i][j].canUse(checkNum + 1)) {
+                            s = s + (checkNum + 1);
+                        } else {
+                            s = s + " ";
+                        }
+                    }
+                    s = s + "]";
+                    if (j % 3 == 2) {
+                        s = s + "+";
+                    }
+                }
+                s = s + "\n";
+            }
+
+            if (i % 3 == 2) {
+                for (int t = 0; t < 48; t++) {
+                    s = s + "+";
+                }
+                s = s + "\n";
+            } else {
+                for (int q = 0; q < 48; q++) {
+                    s = s + "-";
+                }
+                s = s + "\n";
+            }
         }
         return s;
     }

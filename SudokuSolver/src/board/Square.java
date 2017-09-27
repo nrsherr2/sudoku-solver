@@ -50,7 +50,7 @@ public class Square {
         if (val >= 1 && val <= 9) {
             return availableNums[val - 1];
         } else {
-            throw new IllegalArgumentException("Not a valid number");
+            throw new IllegalArgumentException("Not a valid number: " + val);
         }
     }
 
